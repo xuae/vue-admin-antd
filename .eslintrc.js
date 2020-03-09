@@ -1,3 +1,15 @@
+// eslint 配置文件，采用的模式是 eslint + prettier
+// 依赖包：
+// @typescript-eslint/eslint-plugin
+// @typescript-eslint/parser
+// @vue/cli-plugin-eslint
+// @vue/eslint-config-prettier
+// @vue/eslint-config-typescript
+// eslint
+// eslint-plugin-prettier
+// eslint-plugin-sort-imports-es6-autofix // import 自动排序
+// eslint-plugin-vue
+
 module.exports = {
   root: true,
   env: {
@@ -5,22 +17,22 @@ module.exports = {
   },
   plugins: ['sort-imports-es6-autofix'],
   extends: [
-    'plugin:vue/essential',
-    'eslint:recommended',
-    '@vue/typescript/recommended',
-    '@vue/prettier',
-    '@vue/prettier/@typescript-eslint',
-
     // 'plugin:vue/essential',
-    // 'plugin:vue/strongly-recommended',
+    // 'eslint:recommended',
+    // '@vue/typescript/recommended',
     // '@vue/prettier',
-    //
-    // 'prettier',
-    // 'prettier/vue',
-    // 'plugin:vue/recommended',
-    // 'plugin:prettier/recommended',
-    //
-    // '@vue/typescript',
+    // '@vue/prettier/@typescript-eslint',
+
+    'plugin:vue/essential',
+    'plugin:vue/strongly-recommended',
+    '@vue/prettier',
+
+    'prettier',
+    'prettier/vue',
+    'plugin:vue/recommended',
+    'plugin:prettier/recommended',
+
+    '@vue/typescript',
   ],
   parserOptions: {
     parser: '@typescript-eslint/parser',
