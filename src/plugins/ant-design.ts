@@ -1,6 +1,8 @@
-// ant design 组件全局注册
-// 依赖包：
-// ant-design-vue
+/**
+ * ant design 组件全局注册
+ *
+ * @dependency: ant-design-vue
+ */
 
 import {
   Affix,
