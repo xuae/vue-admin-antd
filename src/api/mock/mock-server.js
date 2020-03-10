@@ -2,10 +2,10 @@
  * 启动 mock 服务，模拟数据请求
  * 可在浏览器控制台 network 中看到发出的请求信息
  *
- * @dependency: mockjs
- * @dependency: chokidar
- * @dependency: chalk
- * @dependency: @babel/register
+ * @dependency mockjs
+ * @dependency chokidar
+ * @dependency chalk
+ * @dependency @babel/register
  */
 
 const chokidar = require('chokidar');

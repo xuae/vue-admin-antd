@@ -1,7 +1,7 @@
 /**
  * ant design 组件全局注册
  *
- * @dependency: ant-design-vue
+ * @dependency ant-design-vue
  */
 
 import {

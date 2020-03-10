@@ -8,17 +8,18 @@
 /**
  * xxx
  *
- * @dependency: xxx (npm | yarn 引入的依赖包名)
- * @dependency: xxx
+ * @dependency xxx (npm | yarn 引入的依赖包名)
+ * @dependency xxx
  */
 ```
 
 ### 代码有待改进，因各种原因未改需注释
 ``` javascript
+// TODO
 /**
  * xxx
  *
- * @TODO: xxx
+ * @todo xxx
  */
 ```
 
