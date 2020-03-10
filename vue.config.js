@@ -5,7 +5,7 @@ const path = require('path');
  *
  * 当被占用时，node会新开个端口给项目使用，但是 mock server 的端口还是用的此数据，
  * 因此需手动改此值，保证项目端口与 mock server 的端口一致
- * @TODO: 期望能自动获取项目启动的端口，有待改进
+ * @todo 期望能自动获取项目启动的端口，有待改进
  *
  * @type {number}
  */
@@ -89,8 +89,8 @@ module.exports = {
     /**
      * 给vue页面加上全局样式和变量，无需在每个vue文件中引入样式（引入多次会导致全局样式类名出现多次）
      *
-     * @dependency: style-resources-loader
-     * @dependency: vue-cli-plugin-style-resources-loader
+     * @dependency style-resources-loader
+     * @dependency vue-cli-plugin-style-resources-loader
      */
     'style-resources-loader': {
       preProcessor: 'less',

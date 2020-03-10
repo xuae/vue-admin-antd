@@ -1,7 +1,7 @@
 /**
  * 模拟数据
  *
- * @dependency: mockjs
+ * @dependency mockjs
  */
 
 import Mock from 'mockjs';
