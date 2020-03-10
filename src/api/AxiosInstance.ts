@@ -1,7 +1,7 @@
 /**
  * Axios 请求拦截器封装
  *
- * @dependency: axios
+ * @dependency axios
  */
 
 import Axios, {

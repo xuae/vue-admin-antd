@@ -1,15 +1,15 @@
 /**
  * eslint 配置文件，采用的模式是 eslint + prettier
  *
- * @dependency: @typescript-eslint/eslint-plugin
- * @dependency: @typescript-eslint/parser
- * @dependency: @vue/cli-plugin-eslint
- * @dependency: @vue/eslint-config-prettier
- * @dependency: @vue/eslint-config-typescript
- * @dependency: eslint
- * @dependency: eslint-plugin-prettier
- * @dependency: eslint-plugin-sort-imports-es6-autofix // import 自动排序
- * @dependency: eslint-plugin-vue
+ * @dependency @typescript-eslint/eslint-plugin
+ * @dependency @typescript-eslint/parser
+ * @dependency @vue/cli-plugin-eslint
+ * @dependency @vue/eslint-config-prettier
+ * @dependency @vue/eslint-config-typescript
+ * @dependency eslint
+ * @dependency eslint-plugin-prettier
+ * @dependency eslint-plugin-sort-imports-es6-autofix // import 自动排序
+ * @dependency eslint-plugin-vue
  */
 
 module.exports = {
