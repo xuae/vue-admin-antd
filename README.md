@@ -1,4 +1,4 @@
-# vue-admin-ant
+# vue-admin-antd
 > 技术栈：Vue 全家桶，Typescript，Ant Design UI组件库
 
 ## 项目规范
