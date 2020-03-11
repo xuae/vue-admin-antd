@@ -128,7 +128,7 @@ module.exports = {
         alias: {
           '@ant-design/icons/lib/dist$': path.resolve(
             __dirname,
-            './src/plugins/antdIcon.ts'
+            './src/plugins/antd-icon.ts'
           ),
         },
       },

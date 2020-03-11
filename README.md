@@ -74,11 +74,11 @@
    ├─shims-tsx.d.ts          #tsx的声明
    ├─shims-vue.d.ts          #vue的声明
    │
-   ├─api
+   ├─api                     #除mock文件夹，其他文件名都采用PascalCase的命名方式
    │  ├─AxiosInstance.ts     #axios请求拦截函数，所有请求必须使用该函数
    │  ├─Manager.ts           #管理员的api
    │  │
-   │  ├─mock
+   │  ├─mock                 #文件名都采用kebab-case的命名方式
    │  │  ├─index.js          #mock数据合集
    │  │  ├─mock-server.js    #启动mock server配置
    │  │  ├─response.js       #mock数据基本返回格式
@@ -87,7 +87,7 @@
    │  └─types
    │     └─Manager.ts        #管理员的类型定义
    │
-   ├─assets                  #静态文件
+   ├─assets                  #静态文件，文件名都采用PascalCase的命名方式
    │  ├─images               #图片文件
    │  │  ├─logo.png          #logo图片
    │  │  │
@@ -99,12 +99,12 @@
    │     ├─ant-vars.less      #ant design全局变量默认值
    │     └─global.less        #全局自定义样式
    │
-   ├─components               #组件
+   ├─components               #组件，文件名都采用PascalCase的命名方式
    │  └─HelloWorld.vue        #测试组件
    │
-   ├─plugins                  #插件
+   ├─plugins                  #插件，文件名都采用kebab-case的命名方式
    │  ├─antd.ts               #按需引入ant design的组件和组件样式
-   │  └─antdIcon.ts           #按需引入ant design的icon图标
+   │  └─antd-icon.ts          #按需引入ant design的icon图标
    │
    ├─router                   #路由
    │  └─index.ts
@@ -112,9 +112,9 @@
    ├─store                    #状态管理
    │  └─index.ts
    │
-   └─views                    #视图
-      ├─About.vue             #about页面
-      └─Home.vue              #主页
+   └─views                    #视图，文件名都采用kebab-case的命名方式
+      ├─about.vue             #about页面
+      └─home.vue              #home页
 ```
 
 ## <h2 id="npm">项目命令</h2>
