@@ -4,6 +4,16 @@
       button
     </a-button>
     <br />
+    <a-badge status="success" text="Success" />
+    <br />
+    <a-badge status="error" text="Error" />
+    <br />
+    <a-badge status="default" text="Default" />
+    <br />
+    <a-badge status="processing" text="Processing" />
+    <br />
+    <a-badge status="warning" text="warning" />
+    <br />
     {{ managerMsg ? managerMsg : '空' }}
   </div>
 </template>
@@ -34,6 +44,6 @@
 
 <style scoped lang="less">
   .custom-class {
-    color: @red-6;
+    color: @normal-color;
   }
 </style>
