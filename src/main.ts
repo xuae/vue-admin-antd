@@ -1,6 +1,6 @@
 import './assets/less/ant-theme.less'; // ant design 全局样式
 import './assets/less/global.less'; // 自定义的全局样式
-import './plugins/ant-design'; // ant design 插件
+import './plugins/antd'; // ant design 插件
 import App from './App.vue';
 import router from './router';
 import store from './store';
