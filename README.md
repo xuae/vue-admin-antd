@@ -87,7 +87,7 @@
    │  └─types
    │     └─Manager.ts        #管理员的类型定义
    │
-   ├─assets                  #静态文件，文件名都采用PascalCase的命名方式
+   ├─assets                  #静态文件，文件名都采用kebab-case的命名方式
    │  ├─images               #图片文件
    │  │  ├─logo.png          #logo图片
    │  │  │
@@ -113,6 +113,9 @@
    │  └─index.ts
    │
    └─views                    #视图，文件名都采用kebab-case的命名方式
+      ├─403.vue               #权限不足提示页
+      ├─404.vue               #页面不存在提示页
+      ├─500.vue               #服务器错误提示页
       ├─about.vue             #about页面
       └─home.vue              #home页
 ```
