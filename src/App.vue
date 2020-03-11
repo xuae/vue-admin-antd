@@ -1,37 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">
-        Home
-      </router-link>
-      |
-      <router-link to="/about">
-        About
-      </router-link>
-    </div>
-    <router-view />
+    <a-locale-provider :locale="zh_CN">
+      <router-view />
+    </a-locale-provider>
   </div>
 </template>
 
-<style lang="less">
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
+<script>
+  import 'moment/locale/zh-cn';
+  import moment from 'moment';
+  import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
 
-  #nav {
-    padding: 30px;
+  moment.locale('zh-cn');
+  export default {
+    data() {
+      return {
+        zh_CN,
+      };
+    },
+  };
+</script>
 
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
-    }
-  }
-</style>
+<style lang="less"></style>

@@ -116,7 +116,7 @@ Vue.use(Button);
 // Vue.use(InputNumber);
 // Vue.use(Layout);
 // Vue.use(List);
-// Vue.use(LocaleProvider);
+Vue.use(LocaleProvider); // 全局化配置
 // Vue.use(Menu);
 // Vue.use(Modal);
 // Vue.use(Pagination);
