@@ -2,7 +2,8 @@
 > 技术栈：Vue 全家桶，Typescript，Ant Design UI组件库
 
 - <a href='#standard'>代码规范</a>
-- <a href='#directory'>目录结构</a>
+- <a href='#directory'>文件结构</a>
+- <a href='#npm'>项目命令</a>
 
 ## <h2 id='standard'>代码规范</h2>
 
@@ -26,15 +27,24 @@
  */
 ```
 
-## <h2 id='directory'>目录结构</h2>
+## <h2 id='directory'>文件结构</h2>
 
-> Windows下，使用tree直接生成目录结构
+> Windows下，使用tree直接生成文件结构
 >
 > 虽然和Linux系统下相差很多，基本的还是可以使用的
 > 
 > 查看命令帮助
->
-> ![tree命令](./src/assets/images/markdown/tree.png)
+> ```
+> D:\Projects\GitHub\vue-admin-antd>tree /?
+> 以图形显示驱动器或路径的文件夹结构。
+> 
+> TREE [drive:][path] [/F] [/A]
+> 
+>    /F   显示每个文件夹中文件的名称。
+>    /A   使用 ASCII 字符，而不使用扩展字符。
+> ```
+[^_^]: #图片在github上老是加载失败，特换成以上代码
+[^_^]: #![tree命令](./src/assets/images/markdown/tree.png)
 
 ```
 ├─.browserslistrc            #browserslist配置
@@ -107,7 +117,7 @@
       └─Home.vue              #主页
 ```
 
-## Project setup
+## <h2 id="npm">项目命令</h2>
 
 ```
 npm install
