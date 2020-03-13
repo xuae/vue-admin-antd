@@ -88,17 +88,38 @@ Vue.prototype.$form = Form;
  * Vue.use(Badge); // 注册组件
  */
 // Vue.use(Base);
+
+// 固钉
 // Vue.use(Affix);
+
+// 锚点
 // Vue.use(Anchor);
+
+//自动完成
 // Vue.use(AutoComplete);
+
 // Vue.use(Alert);
-// Vue.use(Avatar);
-// Vue.use(BackTop);
+
+// 头像
+import 'ant-design-vue/lib/avatar/style';
+Vue.use(Avatar);
+
+// 返回顶部
+import 'ant-design-vue/lib/back-top/style';
+Vue.use(BackTop);
+
+// 标签
 import 'ant-design-vue/lib/badge/style';
 Vue.use(Badge);
-// Vue.use(Breadcrumb);
+
+// 面包屑
+import 'ant-design-vue/lib/breadcrumb/style';
+Vue.use(Breadcrumb);
+
+// 按钮
 import 'ant-design-vue/lib/button/style';
 Vue.use(Button);
+
 // Vue.use(Calendar);
 // Vue.use(Card);
 // Vue.use(Collapse);
@@ -109,15 +130,34 @@ Vue.use(Button);
 // Vue.use(DatePicker);
 // Vue.use(Divider);
 // Vue.use(Drawer);
-// Vue.use(Dropdown);
+
+// 下拉菜单
+import 'ant-design-vue/lib/dropdown/style';
+Vue.use(Dropdown);
+
 // Vue.use(Form);
-// Vue.use(Icon);
+
+// 图标
+import 'ant-design-vue/lib/icon/style';
+Vue.use(Icon);
+
 // Vue.use(Input);
 // Vue.use(InputNumber);
-// Vue.use(Layout);
+
+// 布局
+import 'ant-design-vue/lib/layout/style';
+Vue.use(Layout);
+
+// 列表
 // Vue.use(List);
-Vue.use(LocaleProvider); // 全局化配置
-// Vue.use(Menu);
+
+// 全局化配置
+Vue.use(LocaleProvider);
+
+// 导航菜单
+import 'ant-design-vue/lib/menu/style';
+Vue.use(Menu);
+
 // Vue.use(Modal);
 // Vue.use(Pagination);
 // Vue.use(Popconfirm);
