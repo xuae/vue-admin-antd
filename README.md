@@ -7,6 +7,11 @@
 
 ## <h2 id='standard'>代码规范</h2>
 
+- [API 接口规范](./src/api/README.md)
+- [Vuex Store 全局变量规范](./src/store/README.md)
+- [Component 组件规范](./src/components/README.md)
+- [View 页面规范](./src/views/README.md)
+
 ### 引入新模块，必须在使用的地方注释
 ``` javascript
 /**
@@ -75,17 +80,18 @@
    ├─shims-vue.d.ts          #vue的声明
    │
    ├─api                     #除mock文件夹，其他文件名都采用PascalCase的命名方式
+   │  ├─README.md            #api文件规范
    │  ├─AxiosInstance.ts     #axios请求拦截函数，所有请求必须使用该函数
-   │  ├─Manager.ts           #管理员的api
+   │  ├─Xxx.ts               #模块xxx的api
    │  │
    │  ├─mock                 #文件名都采用kebab-case的命名方式
    │  │  ├─index.js          #mock数据合集
    │  │  ├─mock-server.js    #启动mock server配置
    │  │  ├─response.js       #mock数据基本返回格式
-   │  │  └─manager.js        #管理员的mock数据
+   │  │  └─xxx.js            #模块xxx的mock数据
    │  │
    │  └─types
-   │     └─Manager.ts        #管理员的类型定义
+   │     └─Xxx.ts            #模块xxx的类型声明
    │
    ├─assets                  #静态文件，文件名都采用kebab-case的命名方式
    │  ├─images               #图片文件
@@ -100,7 +106,8 @@
    │     └─global.less        #全局自定义样式
    │
    ├─components               #组件，文件名都采用PascalCase的命名方式
-   │  └─HelloWorld.vue        #测试组件
+   │  ├─README.md             #component文件规范
+   │  └─Xxx.vue               #单组件文件
    │
    ├─plugins                  #插件，文件名都采用kebab-case的命名方式
    │  ├─antd.ts               #按需引入ant design的组件和组件样式
@@ -110,14 +117,12 @@
    │  └─index.ts
    │
    ├─store                    #状态管理
+   │  ├─README.md             #store文件规范
    │  └─index.ts
    │
    └─views                    #视图，文件名都采用kebab-case的命名方式
-      ├─403.vue               #权限不足提示页
-      ├─404.vue               #页面不存在提示页
-      ├─500.vue               #服务器错误提示页
-      ├─about.vue             #about页面
-      └─home.vue              #home页
+      ├─README.md             #view文件规范
+      └─xxx.vue               #页面文件
 ```
 
 ## <h2 id="npm">项目命令</h2>
