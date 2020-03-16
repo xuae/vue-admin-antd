@@ -17,12 +17,34 @@
     </div>
     <a-menu mode="inline" theme="dark">
       <template v-for="item in routes">
+        <!--隐藏的菜单不显示-->
         <template v-if="showMenu(item)">
-          <a-menu-item v-if="!getMenuShowingChildren(item)" :key="item.path">
-            <a-icon v-if="getMenuIcon(item)" :type="getMenuIcon(item)" />
-            <span>{{ getMenuTitle(item) }}</span>
-          </a-menu-item>
-          <layout-sidebar-menu v-else :key="item.path" :menu="item" />
+          <!--一级根菜单，menu = item-->
+          <template v-if="isRootMenu(item)">
+            <a-menu-item v-if="!getSubMenus(item)" :key="item.path">
+              <a-icon v-if="getMenuIcon(item)" :type="getMenuIcon(item)" />
+              <span>{{ getMenuTitle(item) }}</span>
+            </a-menu-item>
+            <layout-sidebar-menu v-else :key="item.path" :menu="item" />
+          </template>
+          <!--不是一级根菜单，显示其第一个子元素，menu = item.children[0]-->
+          <template v-else>
+            <a-menu-item
+              v-if="!getSubMenus(item.children[0])"
+              :key="item.children[0].path"
+            >
+              <a-icon
+                v-if="getMenuIcon(item.children[0])"
+                :type="getMenuIcon(item.children[0])"
+              />
+              <span>{{ getMenuTitle(item.children[0]) }}</span>
+            </a-menu-item>
+            <layout-sidebar-menu
+              v-else
+              :key="item.children[0].path"
+              :menu="item.children[0]"
+            />
+          </template>
         </template>
       </template>
     </a-menu>
@@ -74,25 +96,11 @@
       return !(menu.meta && menu.meta.hidden);
     }
 
-    // 菜单有重定向且仅有一个子菜单，没title时，显示其子菜单数据
-    hasMenuRootChild(menu: RouteConfig) {
-      if (
-        !this.getMenuTitle(menu) &&
-        menu.children &&
-        menu.children.length === 1
-      ) {
-        return menu.children[0];
-      }
-      return null;
-    }
-
     // 获取菜单的标题
     getMenuTitle(menu: RouteConfig) {
       if (this.showMenu(menu)) {
         if (menu.meta && menu.meta.title) {
           return menu.meta.title;
-        } else if (menu.name) {
-          return menu.name;
         }
         return menu.path;
       }
@@ -107,8 +115,17 @@
       return null;
     }
 
+    // 是否是根菜单，若当前根路由有 redirect，且子路由只有一个时，菜单仅显示子路由
+    isRootMenu(menu: RouteConfig) {
+      if (menu.redirect && menu.children && menu.children.length === 1) {
+        console.log(menu);
+        return false;
+      }
+      return true;
+    }
+
     // 获取菜单需要显示的子菜单列表
-    getMenuShowingChildren(menu: RouteConfig) {
+    getSubMenus(menu: RouteConfig) {
       if (!menu.children || menu.children.length === 0) {
         return null;
       }
