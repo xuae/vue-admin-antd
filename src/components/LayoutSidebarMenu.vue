@@ -8,12 +8,9 @@
       />
       <span>{{ parent.getMenuTitle(props.menu) }}</span>
     </template>
-    <template v-for="item in parent.getMenuShowingChildren(props.menu)">
+    <template v-for="item in parent.getSubMenus(props.menu)">
       <template v-if="parent.showMenu(item)">
-        <a-menu-item
-          v-if="!parent.getMenuShowingChildren(item)"
-          :key="item.path"
-        >
+        <a-menu-item v-if="!parent.getSubMenus(item)" :key="item.path">
           <a-icon
             v-if="parent.getMenuIcon(item)"
             :type="parent.getMenuIcon(item)"
