@@ -5,6 +5,29 @@ import Layout from '@/components/Layout.vue';
 
 Vue.use(VueRouter);
 
+/**
+ * 页面路由 + 侧边栏菜单配置
+ *
+ * vue-router 的基本配置项：
+ * path: string
+ * name?: string
+ * component?: Component
+ * components?: Dictionary<Component>
+ * redirect?: RedirectOption, // 若当前根路由有 redirect，且子路由只有一个时，根菜单仅显示子路由
+ * alias?: string | string[]
+ * children?: RouteConfig[]
+ * beforeEnter?: NavigationGuard
+ * props?: boolean | Object | RoutePropsFunction
+ * caseSensitive?: boolean
+ * pathToRegexpOptions?: PathToRegexpOptions
+ *
+ * 侧边栏菜单显示的数据，需要定义在 meta 中，meta 约束如下：
+ * meta?: {
+ *   hidden?: boolean, // 是否隐藏此菜单，default: false
+ *   title?: string, // 菜单的标题，若没有，则显示 path
+ *   icon?: string, // ant design icon，全部图标：https://www.antdv.com/components/icon-cn/
+ * }
+ */
 const routes: RouteConfig[] = [
   {
     path: '/about',
