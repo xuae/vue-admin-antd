@@ -33,6 +33,7 @@ const routes: RouteConfig[] = [
     path: '/about',
     name: 'about',
     component: () => import('@/views/about.vue'),
+    meta: { hidden: true },
   },
   {
     path: '/403',
@@ -75,6 +76,20 @@ const routes: RouteConfig[] = [
     meta: { title: '异常页', icon: 'exclamation-circle' },
     children: [
       {
+        path: 'Test-1',
+        name: 'exception5001',
+        component: () => import('@/views/500.vue'),
+        meta: { title: '500', icon: 'exclamation-circle' },
+        children: [
+          {
+            path: 'Test-1-1',
+            name: 'exception5002',
+            component: () => import('@/views/500.vue'),
+            meta: { title: '500', icon: 'exclamation-circle' },
+          },
+        ],
+      },
+      {
         path: '403',
         name: 'exception403',
         component: () => import('@/views/403.vue'),
@@ -91,6 +106,110 @@ const routes: RouteConfig[] = [
         name: 'exception500',
         component: () => import('@/views/500.vue'),
         meta: { title: '500', icon: 'exclamation-circle' },
+      },
+    ],
+  },
+
+  {
+    path: '/menu',
+    component: Layout,
+    redirect: '/exception/403',
+    name: 'menu',
+    meta: { title: 'menu' },
+    children: [
+      {
+        path: 'menu-1',
+        name: 'menu-1',
+        component: () => import('@/views/500.vue'),
+        meta: { title: 'menu-1' },
+        children: [
+          {
+            path: 'menu-1-1',
+            name: 'menu-1-1',
+            component: () => import('@/views/500.vue'),
+            meta: { title: 'menu-1-1' },
+          },
+          {
+            path: 'menu-1-2',
+            name: 'menu-1-2',
+            component: () => import('@/views/500.vue'),
+            meta: { title: 'menu-1-2' },
+          },
+        ],
+      },
+      {
+        path: 'menu-2',
+        name: 'menu-2',
+        component: () => import('@/views/500.vue'),
+        meta: { title: 'menu-2' },
+        children: [
+          {
+            path: 'menu-2-1',
+            name: 'menu-2-1',
+            component: () => import('@/views/500.vue'),
+            meta: { title: 'menu-2-1' },
+            children: [
+              {
+                path: 'menu-2-1-1',
+                name: 'menu-2-1-1',
+                component: () => import('@/views/500.vue'),
+                meta: { title: 'menu-2-1-1' },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    path: '/menu2',
+    component: Layout,
+    redirect: '/exception/403',
+    name: 'menu2',
+    meta: { title: 'menu2' },
+    children: [
+      {
+        path: 'menu-1',
+        name: 'menu2-1',
+        component: () => import('@/views/500.vue'),
+        meta: { title: 'menu2-1' },
+        children: [
+          {
+            path: 'menu-1-1',
+            name: 'menu2-1-1',
+            component: () => import('@/views/500.vue'),
+            meta: { title: 'menu2-1-1' },
+          },
+          {
+            path: 'menu-1-2',
+            name: 'menu2-1-2',
+            component: () => import('@/views/500.vue'),
+            meta: { title: 'menu2-1-2' },
+          },
+        ],
+      },
+      {
+        path: 'menu-2',
+        name: 'menu2-2',
+        component: () => import('@/views/500.vue'),
+        meta: { title: 'menu-2' },
+        children: [
+          {
+            path: 'menu-2-1',
+            name: 'menu2-2-1',
+            component: () => import('@/views/500.vue'),
+            meta: { title: 'menu-2-1' },
+            children: [
+              {
+                path: 'menu-2-1-1',
+                name: 'menu2-2-1-1',
+                component: () => import('@/views/500.vue'),
+                meta: { title: 'menu-2-1-1' },
+              },
+            ],
+          },
+        ],
       },
     ],
   },
