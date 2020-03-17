@@ -15,23 +15,33 @@
       <img src="../assets/images/logo.png" alt="" />
       <h1>Vue Admin Antd</h1>
     </div>
-    <a-menu mode="inline" theme="dark">
+    <a-menu
+      mode="inline"
+      :theme="theme"
+      :default-open-keys="defaultOpenKeys"
+      :open-keys="openKeys"
+      :default-selected-keys="[defaultSelectedKey]"
+      :selected-keys="[selectedKey]"
+      @openChange="onOpenChange"
+      @click="onClick"
+      @select="onSelect"
+    >
       <template v-for="item in routes">
         <!--隐藏的菜单不显示-->
         <template v-if="showMenu(item)">
           <!--一级根菜单，menu = item-->
           <template v-if="isRootMenu(item)">
-            <a-menu-item v-if="!getSubMenus(item)" :key="item.path">
+            <a-menu-item v-if="!getSubMenus(item)" :key="item.name">
               <a-icon v-if="getMenuIcon(item)" :type="getMenuIcon(item)" />
               <span>{{ getMenuTitle(item) }}</span>
             </a-menu-item>
-            <layout-sidebar-menu v-else :key="item.path" :menu="item" />
+            <layout-sidebar-menu v-else :key="item.name" :menu="item" />
           </template>
           <!--不是一级根菜单，显示其第一个子元素，menu = item.children[0]-->
           <template v-else>
             <a-menu-item
               v-if="!getSubMenus(item.children[0])"
-              :key="item.children[0].path"
+              :key="item.children[0].name"
             >
               <a-icon
                 v-if="getMenuIcon(item.children[0])"
@@ -41,7 +51,7 @@
             </a-menu-item>
             <layout-sidebar-menu
               v-else
-              :key="item.children[0].path"
+              :key="item.children[0].name"
               :menu="item.children[0]"
             />
           </template>
@@ -91,6 +101,43 @@
       return router.options.routes;
     }
 
+    selectedKey: string = '';
+    defaultSelectedKey: string = '';
+    openKeys: string[] = [];
+    defaultOpenKeys: string[] = [];
+
+    // 菜单展开事件
+    onOpenChange(openKeys: string[]) {
+      console.log('open', openKeys);
+      const latestOpenKey: string | undefined = openKeys.find(
+        key => !this.openKeys.includes(key)
+      );
+      let data: string[] = [];
+      if (latestOpenKey) {
+        data = [latestOpenKey];
+        // if (!this.rootMenuKeys.includes(latestOpenKey)) {
+        //   data = openKeys;
+        // } else {
+        //   data = [latestOpenKey];
+        // }
+      }
+      this.openKeys = openKeys;
+    }
+
+    // 菜单选中事件
+    onSelect({ item = null, key = '', selectedKeys = '' } = {}) {
+      console.log('select', item);
+      // const menu: RouteConfig | undefined = this.menus.find(
+      //         item => item.key && item.key === key
+      // );
+      // if (menu && menu.name && this.$route.name !== menu.name) {
+      //   this.$router.push({ name: menu.name });
+      // }
+    }
+    onClick({ item = null, key = '', keyPath = '' } = {}) {
+      console.log('click', item);
+    }
+
     // 是否显示菜单
     showMenu(menu: RouteConfig) {
       return !(menu.meta && menu.meta.hidden);
@@ -118,7 +165,6 @@
     // 是否是根菜单，若当前根路由有 redirect，且子路由只有一个时，菜单仅显示子路由
     isRootMenu(menu: RouteConfig) {
       if (menu.redirect && menu.children && menu.children.length === 1) {
-        console.log(menu);
         return false;
       }
       return true;
