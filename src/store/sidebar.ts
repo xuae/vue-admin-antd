@@ -26,6 +26,7 @@ interface StateSidebar {
   defaultCollapsed: boolean; // 是否默认收起
   width: number | string; // 宽度
   theme: 'light' | 'dark'; // 主题颜色
+  uniqueOpened: boolean; // 是否只保持一个子菜单的展开
 }
 
 /**
@@ -46,6 +47,7 @@ export const state: StateSidebar = {
   defaultCollapsed: false, // 是否默认收起
   width: '240', // 宽度
   theme: 'dark', // 主题颜色
+  uniqueOpened: false, // 是否只保持一个子菜单的展开
 };
 
 /**
