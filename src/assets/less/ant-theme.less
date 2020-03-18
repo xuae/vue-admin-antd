@@ -1,6 +1,21 @@
 @import "ant-vars"; // 需要重置 ant design 的 less 变量， 请修改 ant-vars.less .
 
 // 重置 ant design 的样式
+.ant-menu-dark {
+  .ant-menu-submenu-title {
+    &:hover {
+      .ant-menu-submenu-arrow {
+        opacity: 1;
+
+        &:before,
+        &:after {
+          background: @white;
+        }
+      }
+    }
+  }
+}
+
 .ant-input,
 .ant-select,
 .ant-input-search,

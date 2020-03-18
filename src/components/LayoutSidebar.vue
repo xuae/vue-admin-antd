@@ -11,20 +11,19 @@
     :width="width"
     :theme="theme"
   >
+    <!--Logo-->
     <div class="layout-sidebar__logo">
       <img src="../assets/images/logo.png" alt="" />
       <h1>Vue Admin Antd</h1>
     </div>
+    <!--菜单-->
     <a-menu
       mode="inline"
       :theme="theme"
-      :default-open-keys="defaultOpenKeys"
-      :open-keys="openKeys"
-      :default-selected-keys="[defaultSelectedKey]"
-      :selected-keys="[selectedKey]"
+      :open-keys="openMenuKeys"
+      :selected-keys="[selectedMenuKey]"
       @openChange="onOpenChange"
       @click="onClick"
-      @select="onSelect"
     >
       <template v-for="item in routes">
         <!--隐藏的菜单不显示-->
@@ -62,9 +61,9 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Watch } from 'vue-property-decorator';
+  import { Component, Emit, Vue, Watch } from 'vue-property-decorator';
   import { namespace } from 'vuex-class';
-  import { RouteConfig } from 'vue-router';
+  import { RouteConfig, RouteRecord } from 'vue-router';
   import LayoutSidebarMenu from '@/components/LayoutSidebarMenu.vue';
 
   const SidebarModule = namespace('sidebar');
@@ -73,7 +72,14 @@
     components: { LayoutSidebarMenu },
   })
   export default class LayoutSidebar extends Vue {
-    menuCollapsed: Boolean = false; // 当前折叠状态
+    menuCollapsed: Boolean = false; // 菜单折叠状态
+    selectedMenuKey: string = ''; // 选中的菜单 key 值
+    openMenuKeys: Array<string> = []; // 展开的菜单 key 数组
+    tempOpenMenuKeys: Array<string> = []; // 存放菜单折叠时，展开的 key 数组
+
+    // 若当前需要跳转的路由与当前路由一致，则刷新当前路由页面
+    @Emit('reload-view')
+    reloadView() {}
 
     @Watch('menuCollapsed')
     onMenuCollapsedChange() {
@@ -84,6 +90,12 @@
     @SidebarModule.State('collapsed') collapsed!: Boolean;
     @Watch('collapsed')
     onCollapsedChange() {
+      if (this.collapsed) {
+        this.tempOpenMenuKeys = [...this.openMenuKeys];
+        this.openMenuKeys = [];
+      } else {
+        this.openMenuKeys = [...this.tempOpenMenuKeys];
+      }
       this.menuCollapsed = this.collapsed;
     }
 
@@ -92,6 +104,7 @@
     @SidebarModule.State('defaultCollapsed') defaultCollapsed!: Boolean;
     @SidebarModule.State('width') width!: number | string;
     @SidebarModule.State('theme') theme!: string;
+    @SidebarModule.State('uniqueOpened') uniqueOpened!: string;
 
     @SidebarModule.Mutation('SET_COLLAPSED') setCollapsed!: Function;
 
@@ -101,46 +114,87 @@
       return router.options.routes;
     }
 
-    selectedKey: string = '';
-    defaultSelectedKey: string = '';
-    openKeys: string[] = [];
-    defaultOpenKeys: string[] = [];
+    // 获取当前路由信息
+    get route() {
+      return this.$route;
+    }
 
-    // 菜单展开事件
-    onOpenChange(openKeys: string[]) {
-      console.log('open', openKeys);
-      const latestOpenKey: string | undefined = openKeys.find(
-        key => !this.openKeys.includes(key)
-      );
-      let data: string[] = [];
-      if (latestOpenKey) {
-        data = [latestOpenKey];
-        // if (!this.rootMenuKeys.includes(latestOpenKey)) {
-        //   data = openKeys;
-        // } else {
-        //   data = [latestOpenKey];
-        // }
+    // 路由更改时，更改选中的菜单 key 和展开的菜单key 数组
+    @Watch('route', { immediate: true, deep: true })
+    onRouteChange() {
+      const route = this.route;
+      if (route.name) {
+        this.selectedMenuKey = route.name;
       }
-      this.openKeys = openKeys;
+      const openKeys: Array<string> = [];
+      route.matched.forEach((item: RouteRecord) => {
+        if (item.name && item.name !== route.name) {
+          openKeys.push(item.name);
+        }
+      });
+      if (this.uniqueOpened) {
+        this.openMenuKeys = openKeys;
+      } else {
+        this.openMenuKeys = [...new Set([...this.openMenuKeys, ...openKeys])];
+      }
     }
 
-    // 菜单选中事件
-    onSelect({ item = null, key = '', selectedKeys = '' } = {}) {
-      console.log('select', item);
-      // const menu: RouteConfig | undefined = this.menus.find(
-      //         item => item.key && item.key === key
-      // );
-      // if (menu && menu.name && this.$route.name !== menu.name) {
-      //   this.$router.push({ name: menu.name });
-      // }
+    // 获取一级可展开的菜单 key 数组
+    get rootMenuKeys() {
+      const keys: Array<string> = [];
+      this.routes.forEach((route: RouteConfig) => {
+        if (this.isRootMenu(route)) {
+          if (this.getSubMenus(route) && route.name) {
+            keys.push(route.name);
+          }
+        } else if (route.children) {
+          if (this.getSubMenus(route.children[0]) && route.children[0].name) {
+            keys.push(route.children[0].name);
+          }
+        }
+      });
+      return keys;
     }
-    onClick({ item = null, key = '', keyPath = '' } = {}) {
-      console.log('click', item);
+
+    // 多级菜单展开事件
+    onOpenChange(openKeys: string[]) {
+      console.log('open', openKeys, this.openMenuKeys);
+      if (this.uniqueOpened) {
+        // latestOpenKey 无值表示当前菜单被关闭，有值表示当前点击展开的菜单 key
+        const latestOpenKey: string | undefined = openKeys.find(
+          key => !this.openMenuKeys.includes(key)
+        );
+        let data: string[] = openKeys;
+        if (latestOpenKey && this.rootMenuKeys.includes(latestOpenKey)) {
+          data = [latestOpenKey];
+        }
+        this.openMenuKeys = data;
+      } else {
+        this.openMenuKeys = openKeys;
+      }
+    }
+
+    // 子菜单点击事件
+    onClick({ item = null, key = '', keyPath = [] } = {}) {
+      if (this.route.name === key) {
+        this.reloadView();
+      } else {
+        this.$router.push({ name: key });
+      }
+      this.selectedMenuKey = key;
     }
 
     // 是否显示菜单
     showMenu(menu: RouteConfig) {
       return !(menu.meta && menu.meta.hidden);
+    }
+
+    // 是否是根菜单，若当前根路由有 redirect，且子路由只有一个时，菜单仅显示子路由
+    isRootMenu(menu: RouteConfig) {
+      if (menu.redirect && menu.children && menu.children.length === 1) {
+        return false;
+      }
+      return true;
     }
 
     // 获取菜单的标题
@@ -162,14 +216,6 @@
       return null;
     }
 
-    // 是否是根菜单，若当前根路由有 redirect，且子路由只有一个时，菜单仅显示子路由
-    isRootMenu(menu: RouteConfig) {
-      if (menu.redirect && menu.children && menu.children.length === 1) {
-        return false;
-      }
-      return true;
-    }
-
     // 获取菜单需要显示的子菜单列表
     getSubMenus(menu: RouteConfig) {
       if (!menu.children || menu.children.length === 0) {
@@ -185,7 +231,10 @@
   .layout-sidebar {
     height: 100vh;
     overflow: auto;
-    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+
+    /deep/ .ant-menu {
+      border-right: none;
+    }
 
     &__logo {
       height: @layout-header-height;
@@ -193,7 +242,6 @@
       position: relative;
       padding: 0 @padding-md;
       overflow: hidden;
-      background: #001529;
       cursor: pointer;
       transition: all 0.3s;
 
@@ -207,12 +255,35 @@
       h1 {
         display: inline-block;
         margin: 0;
-        color: @white;
         font-weight: 600;
         font-size: 20px;
         vertical-align: middle;
         animation: fade-in;
         animation-duration: 0.3s;
+      }
+    }
+
+    &.ant-layout-sider-dark {
+      box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+
+      .layout-sidebar__logo {
+        background: @layout-header-background;
+
+        h1 {
+          color: @white;
+        }
+      }
+    }
+
+    &.ant-layout-sider-light {
+      box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+
+      .layout-sidebar__logo {
+        background: @white;
+
+        h1 {
+          color: @primary-color;
+        }
       }
     }
   }

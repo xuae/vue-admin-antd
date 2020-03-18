@@ -1,7 +1,7 @@
 <!--主面板布局-->
 <template>
   <a-layout class="layout">
-    <layout-sidebar />
+    <layout-sidebar @reload-view="onReloadView" />
 
     <a-layout class="layout__container">
       <layout-header />
@@ -45,6 +45,11 @@
       this.$nextTick(function() {
         this.isRouterAlive = true;
       });
+    }
+
+    // 子组件需要刷新当前 view 时调用的方法
+    onReloadView() {
+      this.reload();
     }
 
     async mounted() {

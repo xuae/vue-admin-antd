@@ -10,7 +10,7 @@ Vue.use(VueRouter);
  *
  * vue-router 的基本配置项：
  * path: string
- * name?: string
+ * name?: string, // name 作为菜单的 key 值，唯一的，需要显示的菜单必须添加此数据
  * component?: Component
  * components?: Dictionary<Component>
  * redirect?: RedirectOption, // 若当前根路由有 redirect，且子路由只有一个时，根菜单仅显示子路由
