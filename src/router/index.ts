@@ -1,7 +1,30 @@
+import { ErrorHandler } from 'vue-router/types/router';
 import Vue from 'vue';
 import VueRouter, { RawLocation, Route, RouteConfig } from 'vue-router';
 
 import Layout from '@/components/Layout.vue';
+
+// 重写 router 的 push 方法，添加全局异常捕获
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(
+  location: RawLocation,
+  onComplete?: Function,
+  onAbort?: ErrorHandler
+) {
+  if (onComplete || onAbort) {
+    return originalPush.call(this, location, onComplete, onAbort);
+  }
+  return (
+    originalPush
+      .call(this, location)
+      // @ts-ignore
+      .catch((err: Error) => {
+        // 不需要输出报错信息，请注释掉
+        console.log(err);
+        return err;
+      })
+  );
+};
 
 Vue.use(VueRouter);
 
@@ -76,24 +99,24 @@ const routes: RouteConfig[] = [
     meta: { title: '异常页', icon: 'exclamation-circle' },
     children: [
       {
-        path: 'Test-1',
-        name: 'exception5001',
-        component: () => import('@/views/500.vue'),
-        meta: { title: '500', icon: 'exclamation-circle' },
-        children: [
-          {
-            path: 'Test-1-1',
-            name: 'exception5002',
-            component: () => import('@/views/500.vue'),
-            meta: { title: '500', icon: 'exclamation-circle' },
-          },
-        ],
-      },
-      {
         path: '403',
         name: 'exception403',
         component: () => import('@/views/403.vue'),
         meta: { title: '403', icon: 'exclamation-circle' },
+      },
+      {
+        path: 'redirect403Info',
+        name: 'redirect403info',
+        redirect: '/exception/403/test',
+        component: () => import('@/views/403.vue'),
+        meta: { title: 'redirect to 403Info', icon: 'exclamation-circle' },
+      },
+      {
+        path: '403/:id',
+        name: '403Info',
+        props: true,
+        component: () => import('@/views/403.vue'),
+        meta: { title: '403Info', icon: 'exclamation-circle', hidden: true },
       },
       {
         path: '404',
@@ -218,6 +241,11 @@ const routes: RouteConfig[] = [
 const router = new VueRouter({
   routes,
 });
+
+/**
+ * 全局前置守卫
+ * 参数或查询的改变并不会触发进入/离开的导航守卫
+ */
 router.beforeEach(
   (
     to: Route,
