@@ -14,13 +14,20 @@
           </router-link>
         </a-breadcrumb-item>
       </template>
-      <template v-for="({ title, name }, index) in selectedMenus">
-        <a-breadcrumb-item :key="index">
-          <span v-if="!name || index === selectedMenus.length - 1">
-            {{ title }}
+      <template v-for="({ name, meta, children }, index) in route.matched">
+        <a-breadcrumb-item v-if="meta && meta.title" :key="index">
+          <span
+            v-if="
+              !name ||
+                !children ||
+                children.length === 0 ||
+                index === route.matched.length - 1
+            "
+          >
+            {{ meta.title }}
           </span>
           <router-link v-else :to="{ name }">
-            {{ title }}
+            {{ meta.title }}
           </router-link>
         </a-breadcrumb-item>
       </template>
@@ -65,7 +72,11 @@
 
     @SidebarModule.Mutation('SET_COLLAPSED') setCollapsed!: Function;
     userName: string | null = '';
-    selectedMenus = [];
+
+    // 获取当前路由信息
+    get route() {
+      return this.$route;
+    }
 
     handleCollapsed() {
       this.setCollapsed(!this.collapsed);

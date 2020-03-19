@@ -177,15 +177,27 @@
     // 子菜单点击事件
     onClick({ item = null, key = '', keyPath = [] } = {}) {
       if (this.route.name === key) {
+        // 若在当前页，则刷新页面
         this.reloadView();
       } else {
-        this.$router.push({ name: key });
+        this.$router.push(
+          { name: key },
+          () => {
+            this.selectedMenuKey = key;
+          },
+          (error: Error) => {
+            this.reloadView();
+          }
+        );
       }
-      this.selectedMenuKey = key;
     }
 
     // 是否显示菜单
     showMenu(menu: RouteConfig) {
+      if (this.route.name === menu.name) {
+        // 无论当前菜单是否隐藏，只要 name 相同，则强制显示此菜单
+        return true;
+      }
       return !(menu.meta && menu.meta.hidden);
     }
 
