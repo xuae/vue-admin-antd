@@ -13,6 +13,17 @@
           :key="$route.fullPath"
           class="layout__view"
         />
+
+        <footer class="layout__footer">
+          <a href="http://xuae.github.io/vue-admin-antd/" target="_blank">
+            Vue Admin Antd
+          </a>
+          <a href="http://www.github.com/xuae/vue-admin-antd" target="_blank">
+            <a-icon type="github" />
+          </a>
+          Copyright ©2020
+          <a href="http://www.github.com/xuae" target="_blank">xuae</a>
+        </footer>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -79,11 +90,33 @@
 
     &__view {
       margin: @padding-md 0 @padding-lg;
+      min-height: 60vh;
 
       &.ant-card,
       /deep/ .ant-card {
         border: none;
         margin-bottom: @padding-md;
+      }
+    }
+
+    &__footer {
+      margin: @padding-lg * 2 0 @padding-lg;
+      padding: 0 @padding-md;
+      text-align: center;
+      line-height: 1.5;
+
+      a {
+        color: rgba(0, 0, 0, 0.65);
+        transition: all 0.3s;
+        &:hover {
+          color: @primary-color;
+        }
+        &:active,
+        &:hover,
+        &:focus {
+          text-decoration: none;
+          outline: 0;
+        }
       }
     }
 
