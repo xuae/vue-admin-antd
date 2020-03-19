@@ -301,7 +301,7 @@ export { default as ExclamationCircleOutline } from '@ant-design/icons/lib/outli
 // export { default as FundOutline } from '@ant-design/icons/lib/outline/FundOutline';
 // export { default as GiftOutline } from '@ant-design/icons/lib/outline/GiftOutline';
 // export { default as FunnelPlotOutline } from '@ant-design/icons/lib/outline/FunnelPlotOutline';
-// export { default as GithubOutline } from '@ant-design/icons/lib/outline/GithubOutline';
+export { default as GithubOutline } from '@ant-design/icons/lib/outline/GithubOutline';
 // export { default as GitlabOutline } from '@ant-design/icons/lib/outline/GitlabOutline';
 // export { default as HddOutline } from '@ant-design/icons/lib/outline/HddOutline';
 // export { default as HeartOutline } from '@ant-design/icons/lib/outline/HeartOutline';
