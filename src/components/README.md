@@ -7,6 +7,7 @@
 
 ```
 ├─Layout.vue                 #框架布局
+├─LayoutFooter.vue           #框架布局 - 底部版权声明
 ├─LayoutHeader.vue           #框架布局 - 顶部
 ├─LayoutSidebar.vue          #框架布局 - 左侧边栏
 ├─LayoutSidebarMenu.vue      #框架布局 - 左侧边栏菜单
