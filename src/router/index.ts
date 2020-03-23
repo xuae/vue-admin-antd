@@ -70,6 +70,12 @@ const routes: RouteConfig[] = [
     component: () => import('@/views/exception/500.vue'),
     meta: { hidden: true },
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/login.vue'),
+    meta: { hidden: true },
+  },
 
   {
     path: '/',
