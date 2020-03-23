@@ -125,7 +125,11 @@ Vue.use(Button);
 // Vue.use(Collapse);
 // Vue.use(Carousel);
 // Vue.use(Cascader);
-// Vue.use(Checkbox);
+
+// 多选框
+import 'ant-design-vue/lib/checkbox/style';
+Vue.use(Checkbox);
+
 // Vue.use(Col);
 // Vue.use(DatePicker);
 // Vue.use(Divider);
@@ -135,13 +139,18 @@ Vue.use(Button);
 import 'ant-design-vue/lib/dropdown/style';
 Vue.use(Dropdown);
 
-// Vue.use(Form);
+// 表单
+import 'ant-design-vue/lib/form/style';
+Vue.use(Form);
 
 // 图标
 import 'ant-design-vue/lib/icon/style';
 Vue.use(Icon);
 
-// Vue.use(Input);
+// 输入框
+import 'ant-design-vue/lib/input/style';
+Vue.use(Input);
+
 // Vue.use(InputNumber);
 
 // 布局
@@ -176,7 +185,11 @@ Vue.use(Menu);
 // Vue.use(Transfer);
 // Vue.use(Tree);
 // Vue.use(TreeSelect);
-// Vue.use(Tabs);
+
+// 标签页
+import 'ant-design-vue/lib/tabs/style';
+Vue.use(Tabs);
+
 // Vue.use(Tag);
 // Vue.use(TimePicker);
 // Vue.use(Timeline);
