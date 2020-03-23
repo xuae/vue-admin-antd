@@ -14,16 +14,7 @@
           class="layout__view"
         />
 
-        <footer class="layout__footer">
-          <a href="http://xuae.github.io/vue-admin-antd/" target="_blank">
-            Vue Admin Antd
-          </a>
-          <a href="http://www.github.com/xuae/vue-admin-antd" target="_blank">
-            <a-icon type="github" />
-          </a>
-          Copyright ©2020
-          <a href="http://www.github.com/xuae" target="_blank">xuae</a>
-        </footer>
+        <layout-footer />
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -31,11 +22,12 @@
 
 <script lang="ts">
   import { Component, Provide, Ref, Vue } from 'vue-property-decorator';
+  import LayoutFooter from '@/components/LayoutFooter.vue';
   import LayoutHeader from '@/components/LayoutHeader.vue';
   import LayoutSidebar from '@/components/LayoutSidebar.vue';
 
   @Component({
-    components: { LayoutHeader, LayoutSidebar },
+    components: { LayoutFooter, LayoutHeader, LayoutSidebar },
   })
   export default class Layout extends Vue {
     @Ref() readonly layoutContent!: any;
@@ -96,27 +88,6 @@
       /deep/ .ant-card {
         border: none;
         margin-bottom: @padding-md;
-      }
-    }
-
-    &__footer {
-      margin: @padding-lg * 2 0 @padding-lg;
-      padding: 0 @padding-md;
-      text-align: center;
-      line-height: 1.5;
-
-      a {
-        color: rgba(0, 0, 0, 0.65);
-        transition: all 0.3s;
-        &:hover {
-          color: @primary-color;
-        }
-        &:active,
-        &:hover,
-        &:focus {
-          text-decoration: none;
-          outline: 0;
-        }
       }
     }
 
