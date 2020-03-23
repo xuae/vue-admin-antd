@@ -53,27 +53,21 @@ Vue.use(VueRouter);
  */
 const routes: RouteConfig[] = [
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/about.vue'),
-    meta: { hidden: true },
-  },
-  {
     path: '/403',
     name: '403',
-    component: () => import('@/views/403.vue'),
+    component: () => import('@/views/exception/403.vue'),
     meta: { hidden: true },
   },
   {
     path: '/404',
     name: '404',
-    component: () => import('@/views/404.vue'),
+    component: () => import('@/views/exception/404.vue'),
     meta: { hidden: true },
   },
   {
     path: '/500',
     name: '500',
-    component: () => import('@/views/500.vue'),
+    component: () => import('@/views/exception/500.vue'),
     meta: { hidden: true },
   },
 
@@ -101,33 +95,33 @@ const routes: RouteConfig[] = [
       {
         path: '403',
         name: 'exception403',
-        component: () => import('@/views/403.vue'),
+        component: () => import('@/views/exception/403.vue'),
         meta: { title: '403', icon: 'exclamation-circle' },
       },
-      {
-        path: 'redirect403Info',
-        name: 'redirect403info',
-        redirect: '/exception/403/test',
-        component: () => import('@/views/403.vue'),
-        meta: { title: 'redirect to 403Info', icon: 'exclamation-circle' },
-      },
-      {
-        path: '403/:id',
-        name: '403Info',
-        props: true,
-        component: () => import('@/views/403.vue'),
-        meta: { title: '403Info', icon: 'exclamation-circle', hidden: true },
-      },
+      // {
+      //   path: 'redirect403Info',
+      //   name: 'redirect403info',
+      //   redirect: '/exception/403/test',
+      //   component: () => import('@/views/exception/403.vue'),
+      //   meta: { title: 'redirect to 403Info', icon: 'exclamation-circle' },
+      // },
+      // {
+      //   path: '403/:id',
+      //   name: '403Info',
+      //   props: true,
+      //   component: () => import('@/views/exception/403.vue'),
+      //   meta: { title: '403Info', icon: 'exclamation-circle', hidden: true },
+      // },
       {
         path: '404',
         name: 'exception404',
-        component: () => import('@/views/404.vue'),
+        component: () => import('@/views/exception/404.vue'),
         meta: { title: '404', icon: 'exclamation-circle' },
       },
       {
         path: '500',
         name: 'exception500',
-        component: () => import('@/views/500.vue'),
+        component: () => import('@/views/exception/500.vue'),
         meta: { title: '500', icon: 'exclamation-circle' },
       },
     ],
@@ -143,19 +137,19 @@ const routes: RouteConfig[] = [
       {
         path: 'menu-1',
         name: 'menu-1',
-        component: () => import('@/views/500.vue'),
+        component: () => import('@/views/exception/500.vue'),
         meta: { title: 'menu-1' },
         children: [
           {
             path: 'menu-1-1',
             name: 'menu-1-1',
-            component: () => import('@/views/500.vue'),
+            component: () => import('@/views/exception/500.vue'),
             meta: { title: 'menu-1-1' },
           },
           {
             path: 'menu-1-2',
             name: 'menu-1-2',
-            component: () => import('@/views/500.vue'),
+            component: () => import('@/views/exception/500.vue'),
             meta: { title: 'menu-1-2' },
           },
         ],
@@ -163,19 +157,19 @@ const routes: RouteConfig[] = [
       {
         path: 'menu-2',
         name: 'menu-2',
-        component: () => import('@/views/500.vue'),
+        component: () => import('@/views/exception/500.vue'),
         meta: { title: 'menu-2' },
         children: [
           {
             path: 'menu-2-1',
             name: 'menu-2-1',
-            component: () => import('@/views/500.vue'),
+            component: () => import('@/views/exception/500.vue'),
             meta: { title: 'menu-2-1' },
             children: [
               {
                 path: 'menu-2-1-1',
                 name: 'menu-2-1-1',
-                component: () => import('@/views/500.vue'),
+                component: () => import('@/views/exception/500.vue'),
                 meta: { title: 'menu-2-1-1' },
               },
             ],
@@ -195,19 +189,19 @@ const routes: RouteConfig[] = [
       {
         path: 'menu-1',
         name: 'menu2-1',
-        component: () => import('@/views/500.vue'),
+        component: () => import('@/views/exception/500.vue'),
         meta: { title: 'menu2-1' },
         children: [
           {
             path: 'menu-1-1',
             name: 'menu2-1-1',
-            component: () => import('@/views/500.vue'),
+            component: () => import('@/views/exception/500.vue'),
             meta: { title: 'menu2-1-1' },
           },
           {
             path: 'menu-1-2',
             name: 'menu2-1-2',
-            component: () => import('@/views/500.vue'),
+            component: () => import('@/views/exception/500.vue'),
             meta: { title: 'menu2-1-2' },
           },
         ],
@@ -215,19 +209,19 @@ const routes: RouteConfig[] = [
       {
         path: 'menu-2',
         name: 'menu2-2',
-        component: () => import('@/views/500.vue'),
+        component: () => import('@/views/exception/500.vue'),
         meta: { title: 'menu-2' },
         children: [
           {
             path: 'menu-2-1',
             name: 'menu2-2-1',
-            component: () => import('@/views/500.vue'),
+            component: () => import('@/views/exception/500.vue'),
             meta: { title: 'menu-2-1' },
             children: [
               {
                 path: 'menu-2-1-1',
                 name: 'menu2-2-1-1',
-                component: () => import('@/views/500.vue'),
+                component: () => import('@/views/exception/500.vue'),
                 meta: { title: 'menu-2-1-1' },
               },
             ],

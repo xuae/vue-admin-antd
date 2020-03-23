@@ -80,7 +80,7 @@ export const actions: ActionTree<StateXxx, StateRoot> = {};
    
 - xxx.ts 模块在 vue 文件中的使用方法
 
-```typescript
+```vue
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 
