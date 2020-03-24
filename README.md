@@ -1,9 +1,18 @@
 # vue-admin-antd
 > 技术栈：Vue 全家桶，Typescript，Ant Design UI组件库
 
+- <a href='#prototype'>Vue 实例方法</a>
 - <a href='#standard'>代码规范</a>
 - <a href='#directory'>文件结构</a>
 - <a href='#npm'>项目命令</a>
+
+## <h2 id='prototype'>Vue 实例方法</h2>
+
+> 以下是项目中给 Vue 添加的实例方法，不含 Vue 自带的方法
+
+1. $message, $notification, $info, $success, $error, $warning, $confirm, $form：ant design 的方法，在 [src/plugins/antd.ts](src/plugins/antd.ts) 中添加。
+
+1. $rules：表单验证规则，在 [src/main.ts](src/main.ts) 中添加。
 
 ## <h2 id='standard'>代码规范</h2>
 
