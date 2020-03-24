@@ -7,7 +7,8 @@
       <p>基于 Vue + Ant Design + Typescript 的管理系统</p>
     </header>
     <div class="login__content">
-      <login-form />
+      <login-form v-if="!showRegister" @to-register="handleToRegister" />
+      <register-form v-else @to-login="handleToLogin" />
     </div>
     <layout-footer />
   </div>
@@ -17,10 +18,24 @@
   import { Component, Vue } from 'vue-property-decorator';
   import LayoutFooter from '@/components/LayoutFooter.vue';
   import LoginForm from '@/views/login/components/login-form.vue';
+  import RegisterForm from '@/views/login/components/register-form.vue';
+
   @Component({
-    components: { LoginForm, LayoutFooter },
+    components: { RegisterForm, LoginForm, LayoutFooter },
   })
-  export default class Login extends Vue {}
+  export default class Login extends Vue {
+    showRegister: boolean = false;
+
+    // 显示注册表单
+    handleToRegister() {
+      this.showRegister = true;
+    }
+
+    // 显示登录表单
+    handleToLogin() {
+      this.showRegister = false;
+    }
+  }
 </script>
 
 <style lang="less" scoped>

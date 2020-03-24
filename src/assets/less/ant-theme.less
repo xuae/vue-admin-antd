@@ -1,6 +1,8 @@
 @import "ant-vars"; // 需要重置 ant design 的 less 变量， 请修改 ant-vars.less .
 
 // 重置 ant design 的样式
+
+// 重置菜单在 dark 主题下，鼠标移到菜单展开箭头上颜色显示和文字显示一致
 .ant-menu-dark {
   .ant-menu-submenu-title {
     &:hover {
@@ -10,6 +12,40 @@
         &:before,
         &:after {
           background: @white;
+        }
+      }
+    }
+  }
+}
+
+// 重置 ant input search，在输入框和按钮之间仅显示一条边框
+.ant-form-item {
+  .ant-input-search {
+    .ant-input-prefix {
+      z-index: 3;
+    }
+    .ant-input-group-addon {
+      background: initial;
+    }
+    .ant-btn {
+      margin-left: -1px;
+    }
+  }
+
+  &.ant-form-item-with-help {
+    .ant-input-search {
+      .ant-input-prefix {
+        z-index: 3;
+      }
+      .ant-input {
+        z-index: 1;
+        &:hover {
+          z-index: 2;
+        }
+      }
+      .ant-btn {
+        &:hover {
+          z-index: 2;
         }
       }
     }
