@@ -10,6 +10,7 @@
 - [API 接口规范](./src/api/README.md)
 - [Vuex Store 全局变量规范](./src/store/README.md)
 - [Component 组件规范](./src/components/README.md)
+- [Util 工具规范](./src/utils/README.md)
 - [View 页面规范](./src/views/README.md)
 
 ### 引入新模块，必须在使用的地方注释
@@ -119,6 +120,10 @@
    ├─store                    #状态管理
    │  ├─README.md             #store文件规范
    │  └─index.ts
+   │
+   ├─utils                    #工具文件，文件名都采用PascalCase的命名方式
+   │  ├─README.md             #工具文件规范
+   │  └─Xxx.ts
    │
    └─views                    #视图，文件名都采用kebab-case的命名方式
       ├─README.md             #view文件规范
