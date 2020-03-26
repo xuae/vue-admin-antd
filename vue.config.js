@@ -66,11 +66,9 @@ const mockProxy = {
  */
 const devProxy = {
   [process.env.VUE_APP_BASE_API]: {
-    target: 'http://localhost', // 代理的 API 地址
+    target: process.env.VUE_APP_PROXY_TARGET, // 代理的 API 地址
     changeOrigin: true, // 将主机标头的原点更改为目标URL
-    pathRewrite: {
-      '^/api': '',
-    },
+    pathRewrite: { [`^${process.env.VUE_APP_BASE_API}`]: '' },
     secure: false,
   },
 };
