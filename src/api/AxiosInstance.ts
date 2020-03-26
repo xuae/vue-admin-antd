@@ -8,39 +8,16 @@ import Axios, {
   AxiosInstance,
   AxiosPromise,
   AxiosRequestConfig,
+  AxiosTransformer,
   Method,
   ResponseType,
 } from 'axios';
 
-// 创建 axios 的实例，并对其设置默认值
-const instance: AxiosInstance = Axios.create();
-instance.defaults.baseURL = process.env.VUE_APP_URL;
-instance.defaults.timeout = 15000;
-instance.defaults.withCredentials = true; // 默认带上cookie
-
-// 添加请求拦截器
-instance.interceptors.request.use(
-  config => {
-    // 在发送请求之前做些什么
-    return config;
-  },
-  error => {
-    // 对请求错误做些什么
-    return Promise.reject(error);
-  }
-);
-
-// 添加响应拦截器
-instance.interceptors.response.use(
-  response => {
-    // 对响应数据做点什么
-    return response;
-  },
-  error => {
-    // 对响应错误做点什么
-    return Promise.reject(error);
-  }
-);
+/**
+ * 转换请求数据使用，与 qs 类似
+ * @example querystring.stringify(obj)，转换成 URLSearchParams 对象：key1=value1&ke2=value2
+ */
+const querystring = require('querystring');
 
 // api 返回的数据接口
 export interface Response<T = any> {
@@ -58,58 +35,168 @@ export interface RequestConfig<T = any> extends AxiosRequestConfig {
   // - 浏览器专属：FormData, File, Blob
   // - Node 专属： Stream
   data?: T;
-  params?: T;
 }
+
+// api 请求的类型枚举
+export type ContentType = 'json' | 'form' | 'file';
 
 /**
- * Axois 的请求拦截函数
- * @param uri
- * @param method
- * @param data
- * @param responseType
- * @param contentType
- * @param config
- * @constructor
+ * Axois 请求拦截类
+ * 泛型：
+ * T: 返回的数据类型
+ * D: 请求的数据类型
  */
-function AxiosInstance<T, V = any, R = Response<T>>(
-  uri: string,
-  method: Method,
-  data: V | null = null,
-  responseType: ResponseType = 'json',
-  contentType: 'json' | 'form' | 'file' = 'json',
-  config?: RequestConfig<V>
-): AxiosPromise<R> {
-  const axiosConfig: AxiosRequestConfig = { ...config };
-  axiosConfig.responseType = responseType;
-  axiosConfig.method = method;
-  axiosConfig.transformResponse = [
-    (data: any): Response<T> => {
-      // 对返回的 data 进行任意转换处理
-      return JSON.parse(data);
-    },
-  ];
+export default class AxiosInterceptor<T, D = any, R = Response<T>> {
+  public instance: AxiosInstance; // axios 实例
 
-  const headers: any = axiosConfig.headers ? axiosConfig.headers : {};
-  switch (contentType) {
-    case 'json':
-      headers['Content-Type'] = 'application/json;charset=utf-8';
-      break;
-    case 'form':
-      headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      break;
-    case 'file':
-      headers['Content-Type'] = 'multipart/form-data';
-      break;
+  /**
+   * 构造器
+   *
+   * @param config
+   */
+  constructor(config?: AxiosRequestConfig) {
+    this.instance = Axios.create(config);
+    this.instance.defaults.baseURL = process.env.VUE_APP_BASE_API;
+    this.instance.defaults.timeout = 15000;
+    this.instance.defaults.withCredentials = true; // 默认带上cookie
+
+    // 添加请求拦截器
+    this.instance.interceptors.request.use(
+      config => {
+        // 在发送请求之前做些什么
+        return config;
+      },
+      error => {
+        // 对请求错误做些什么
+        return Promise.reject(error);
+      }
+    );
+
+    // 添加响应拦截器
+    this.instance.interceptors.response.use(
+      response => {
+        // 对响应数据做点什么
+        return response;
+      },
+      error => {
+        // 对响应错误做点什么
+        return Promise.reject(error);
+      }
+    );
   }
-  axiosConfig.headers = headers;
 
-  if (method === 'get' || method === 'GET') {
-    axiosConfig.params = data;
-  } else {
-    axiosConfig.data = data;
+  /**
+   * 公共请求方法
+   *
+   * @param options
+   */
+  public request(options: {
+    uri: string; // 请求的 url 地址
+    method?: Method; // 请求的方法
+    data?: D; // 请求的需要带的数据，只适用于这些请求方法 'PUT', 'POST', 和 'PATCH'
+    params?: any; // 即将与请求一起发送的 URL 参数，必须是一个无格式对象 (plain object) 或 URLSearchParams 对象
+    responseType?: ResponseType; // 返回数据的类型
+    contentType?: ContentType; // 请求数据的类型
+    config?: RequestConfig<D>; // axios 的配置选项
+  }): AxiosPromise<R> {
+    const {
+      uri,
+      method = 'get',
+      data,
+      responseType = 'json',
+      contentType = 'json',
+      config,
+    } = options;
+
+    const axiosConfig: AxiosRequestConfig = config ? { ...config } : {};
+    axiosConfig.responseType = responseType;
+    axiosConfig.method = method;
+    axiosConfig.transformRequest = this.transformRequest(contentType);
+    axiosConfig.transformResponse = this.transformResponse();
+    axiosConfig.headers = this.transformHeaders(
+      axiosConfig.headers,
+      contentType
+    );
+
+    return this.instance(uri, axiosConfig);
   }
 
-  return instance(uri, axiosConfig);
+  /**
+   * 对 headers 进行转换，添加自定义的请求头
+   *
+   * @param headers
+   * @param contentType
+   */
+  protected transformHeaders(headers: any, contentType: ContentType) {
+    headers = this.isObject(headers) ? headers : {};
+    headers['Content-Type'] = this.getContentType(contentType);
+    return headers;
+  }
+
+  /**
+   * 根据参数 contentType，获取请求头中需要的 Content-Type 的值
+   *
+   * @param contentType
+   */
+  protected getContentType(contentType: ContentType) {
+    switch (contentType) {
+      case 'json':
+        return 'application/json;charset=utf-8';
+      case 'form':
+        return 'application/x-www-form-urlencoded';
+      case 'file':
+        return 'multipart/form-data';
+      default:
+        return 'application/json;charset=utf-8';
+    }
+  }
+
+  /**
+   * 对 data 进行任意转换处理
+   * `transformRequest` 允许在向服务器发送前，修改请求数据
+   * 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
+   * 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
+   *
+   * @param contentType
+   */
+  protected transformRequest(contentType: ContentType): AxiosTransformer {
+    return (data: any, headers: any) => {
+      switch (contentType) {
+        case 'json':
+          return JSON.stringify(data);
+        case 'form':
+          return querystring.stringify(data);
+        case 'file':
+          const formData = new FormData();
+          if (this.isObject(data)) {
+            for (const key in data) {
+              formData.append(key, data[key]);
+            }
+          } else {
+            console.error('When Content-Type is file, data must be object');
+          }
+          return formData;
+        default:
+          return data;
+      }
+    };
+  }
+
+  /**
+   * 对返回的 data 进行任意转换处理
+   */
+  protected transformResponse(): AxiosTransformer {
+    return (data: any): Response<T> => {
+      return typeof data === 'string' ? JSON.parse(data) : data;
+    };
+  }
+
+  /**
+   * 检测是否是由 {} 或者 new Object() 创建的对象
+   *
+   * @param value
+   */
+  protected isObject(value: any) {
+    return Object.prototype.toString.call(value) === '[object Object]';
+  }
 }
-
-export default AxiosInstance;
