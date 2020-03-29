@@ -122,6 +122,20 @@ module.exports = {
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/), // 只引入 moment 的中文包
         // new BundleAnalyzerPlugin({ analyzerPort: 8888 }), // js 依赖打包分析
       ],
+      module: {
+        rules: [
+          /**
+           * 添加 markdown 文件的 loader 解析
+           *
+           * @dependency html-loader
+           * @dependency markdown-loader
+           */
+          {
+            test: /\.md$/,
+            loaders: ['html-loader', 'markdown-loader'],
+          },
+        ],
+      },
       resolve: {
         alias: {
           '@ant-design/icons/lib/dist$': path.resolve(

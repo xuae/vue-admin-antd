@@ -17,6 +17,7 @@
 ## <h2 id='standard'>代码规范</h2>
 
 - [API 接口规范](./src/api/README.md)
+- [Mock 数据规范](./src/api/mock/README.md)
 - [Vuex Store 全局变量规范](./src/store/README.md)
 - [Component 组件规范](./src/components/README.md)
 - [Util 工具规范](./src/utils/README.md)
@@ -91,17 +92,14 @@
    │
    ├─api                     #除mock文件夹，其他文件名都采用PascalCase的命名方式
    │  ├─README.md            #api文件规范
-   │  ├─AxiosInstance.ts     #axios请求拦截函数，所有请求必须使用该函数
+   │  ├─AxiosInterceptor.ts  #axios请求拦截函数，所有请求必须使用该函数
    │  ├─Xxx.ts               #模块xxx的api
    │  │
-   │  ├─mock                 #文件名都采用kebab-case的命名方式
-   │  │  ├─index.js          #mock数据合集
-   │  │  ├─mock-server.js    #启动mock server配置
-   │  │  ├─response.js       #mock数据基本返回格式
-   │  │  └─xxx.js            #模块xxx的mock数据
-   │  │
-   │  └─types
-   │     └─Xxx.ts            #模块xxx的类型声明
+   │  └─mock                 #文件名都采用kebab-case的命名方式
+   │     ├─index.js          #mock数据合集
+   │     ├─mock-server.js    #启动mock server配置
+   │     ├─response.js       #mock数据基本返回格式
+   │     └─xxx.js            #模块xxx的mock数据
    │
    ├─assets                  #静态文件，文件名都采用kebab-case的命名方式
    │  ├─images               #图片文件
