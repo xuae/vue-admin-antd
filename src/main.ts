@@ -24,8 +24,8 @@ Vue.config.devtools = process.env.NODE_ENV === 'development'; // 生产环境下
  * VUE_APP_MOCK is defined in .env.production or .env.development
  */
 if (process.env.VUE_APP_MOCK === 'Mock') {
-  const { mockXHR } = require('./api/mock');
-  mockXHR();
+  const Mock = require('./api/mock/index.js').default;
+  Mock.mockXHR();
 }
 
 new Vue({
