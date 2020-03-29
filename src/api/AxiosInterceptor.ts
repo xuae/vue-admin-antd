@@ -103,12 +103,15 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
       uri,
       method = 'get',
       data,
+      params,
       responseType = 'json',
       contentType = 'json',
       config,
     } = options;
 
     const axiosConfig: AxiosRequestConfig = config ? { ...config } : {};
+    axiosConfig.params = params;
+    axiosConfig.data = data;
     axiosConfig.responseType = responseType;
     axiosConfig.method = method;
     axiosConfig.transformRequest = this.transformRequest(contentType);
