@@ -5,21 +5,21 @@ export default [
     uri: '/login',
     method: 'post',
     response: config => {
-      console.log(config.body, config.query);
-      // const { username } = config.body;
-      //
-      // // mock error
-      // if (username !== 'admin') {
-      //   return Util.responseError('账号错误，必须是admin');
-      // }
+      // console.log(config.body, config.query);
+      const { account, password } = config.body;
+
+      // mock error
+      if (account !== 'admin' || password !== '123456') {
+        return Util.responseError('账号或密码错误，admin/123456');
+      }
 
       return Util.responseOk({
-        user: {
-          email: '@email',
-          userName: '@cname',
-        },
-        expire: '@now',
-        sessionId: /\d{5,10}\/-2/,
+        id: '@id',
+        nick: '@cname',
+        account: account,
+        email: '@email',
+        phone: /^(13|14|15|17|18|19)[0-9]{9}$/,
+        token: /\d{5,10}\/-2/,
       });
     },
   }),

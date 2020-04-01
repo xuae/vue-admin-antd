@@ -98,7 +98,9 @@ Vue.prototype.$form = Form;
 //自动完成
 // Vue.use(AutoComplete);
 
-// Vue.use(Alert);
+// 警告提示
+import 'ant-design-vue/lib/alert/style';
+Vue.use(Alert);
 
 // 头像
 import 'ant-design-vue/lib/avatar/style';

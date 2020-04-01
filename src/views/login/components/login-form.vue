@@ -7,6 +7,12 @@
       @change="handleTabChange"
     >
       <a-tab-pane key="account" tab="账号密码登录">
+        <a-alert
+          v-if="errorMessage"
+          :message="errorMessage"
+          type="error"
+          show-icon
+        />
         <a-form-item>
           <a-input
             v-decorator="[
@@ -35,6 +41,12 @@
         </a-form-item>
       </a-tab-pane>
       <a-tab-pane key="mobile" tab="手机号登录" force-render>
+        <a-alert
+          v-if="errorMessage"
+          :message="errorMessage"
+          type="error"
+          show-icon
+        />
         <a-form-item>
           <a-input
             v-decorator="[
@@ -89,6 +101,7 @@
 
 <script lang="ts">
   import { Component, Emit, Vue } from 'vue-property-decorator';
+  import Account from '@/api/Account';
 
   @Component
   export default class LoginForm extends Vue {
@@ -96,6 +109,7 @@
 
     activeKey: 'account' | 'mobile' = 'account';
     form: any = null;
+    errorMessage: string | null = null; // 错误提示信息
 
     // 登录按钮点击事件
     handleSubmit(e: Event) {
@@ -106,7 +120,7 @@
             ['account', 'password'],
             async (error: any, values: any) => {
               if (!error) {
-                console.log(values);
+                this.login(values);
               }
             }
           );
@@ -116,7 +130,7 @@
             ['mobile', 'code'],
             async (error: any, values: any) => {
               if (!error) {
-                console.log(values);
+                this.login(values);
               }
             }
           );
@@ -124,10 +138,21 @@
       }
     }
 
+    // 登录方法
+    async login(values: any) {
+      const response = await Account.login(values);
+      if (response.statusCode === 200) {
+        this.$router.push({ name: 'home' });
+      } else {
+        this.errorMessage = response.message;
+      }
+    }
+
     // tab 切换事件
     handleTabChange(activeKey: 'account' | 'mobile') {
       this.activeKey = activeKey;
       // 清空表单的错误提示
+      this.errorMessage = null;
       this.form.setFields({
         account: { value: this.form.getFieldValue('account'), errors: null },
         password: { value: this.form.getFieldValue('password'), errors: null },
@@ -154,6 +179,10 @@
         border-bottom: none;
         margin-bottom: @padding-lg;
         text-align: center;
+      }
+
+      /deep/ .ant-alert {
+        margin-bottom: @padding-lg;
       }
     }
 
