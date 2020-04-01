@@ -364,7 +364,7 @@ export { default as SettingOutline } from '@ant-design/icons/lib/outline/Setting
 // export { default as SlidersOutline } from '@ant-design/icons/lib/outline/SlidersOutline';
 // export { default as SnippetsOutline } from '@ant-design/icons/lib/outline/SnippetsOutline';
 // export { default as QuestionCircleOutline } from '@ant-design/icons/lib/outline/QuestionCircleOutline';
-// export { default as SmileOutline } from '@ant-design/icons/lib/outline/SmileOutline';
+export { default as SmileOutline } from '@ant-design/icons/lib/outline/SmileOutline';
 // export { default as SoundOutline } from '@ant-design/icons/lib/outline/SoundOutline';
 // export { default as StepBackwardOutline } from '@ant-design/icons/lib/outline/StepBackwardOutline';
 // export { default as StopOutline } from '@ant-design/icons/lib/outline/StopOutline';
