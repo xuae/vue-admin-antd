@@ -1,13 +1,13 @@
 // const responseOk = (data = null, length = 0) => {
 //   if (length) {
 //     return {
-//       code: '200',
+//       statusCode: '200',
 //       msg: 'OK',
 //       [`data|${length}`]: [data],
 //     };
 //   }
 //   return {
-//     code: '200',
+//     statusCode: '200',
 //     msg: 'OK',
 //     data: data,
 //   };
@@ -19,7 +19,7 @@ export default class Util {
    * @param uri
    * @param method
    * @param response
-   * @return {{method: string, response: (function(): {code: number, data: *, message: string}), uri}|undefined}
+   * @return {{method: string, response: (function(): {statusCode: number, data: *, message: string}), uri}|undefined}
    */
   static request({
     uri,
@@ -65,14 +65,14 @@ export default class Util {
 
   /**
    * 模拟数据返回格式
-   * @param code
+   * @param statusCode
    * @param message
    * @param data
-   * @return {{code: number, data: *, message: string}}
+   * @return {{statusCode: number, data: *, message: string}}
    */
-  static response({ code = 200, message = 'OK', data = null } = {}) {
+  static response({ statusCode = 200, message = 'OK', data = null } = {}) {
     return {
-      code,
+      statusCode,
       message,
       data,
     };
@@ -81,7 +81,7 @@ export default class Util {
   /**
    * 模拟数据返回成功
    * @param data
-   * @return {{code: number, data: *, message: string}}
+   * @return {{statusCode: number, data: *, message: string}}
    */
   static responseOk(data) {
     return this.response({ data });
@@ -91,7 +91,7 @@ export default class Util {
    * 返回列表
    * @param config
    * @param listItem
-   * @return {{code: number, data: *, message: string}}
+   * @return {{statusCode: number, data: *, message: string}}
    */
   static responseList(config, listItem = { id: '@id' }) {
     const { pageSize = 10, pageNo = 1 } = config.body;
@@ -111,11 +111,11 @@ export default class Util {
   /**
    * 返回失败数据
    * @param message
-   * @return {{code: number, data: *, message: string}}
+   * @return {{statusCode: number, data: *, message: string}}
    */
   static responseError(message, data) {
     return this.response({
-      code: 500,
+      statusCode: 500,
       message,
       data,
     });

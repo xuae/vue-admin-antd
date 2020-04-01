@@ -79,7 +79,7 @@ const routes: RouteConfig[] = [
 
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/login',
     component: Layout,
     children: [
       {
