@@ -51,7 +51,8 @@ const mockProxy = {
      * 在POST方法下，直接把body数据以JSON形式搬运到代理请求对象proxyRequest中去
      */
     onProxyReq: (proxyRequest, request, response, options) => {
-      if (request.method === 'POST' && request.body) {
+      const methods = ['POST', 'PUT', 'PATCH'];
+      if (methods.includes(request.method) && request.body) {
         const bodyData = JSON.stringify(request.body);
         proxyRequest.setHeader('Content-Type', 'application/json');
         proxyRequest.setHeader('Content-Length', Buffer.byteLength(bodyData));
