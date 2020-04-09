@@ -125,6 +125,98 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
   }
 
   /**
+   * get 请求方法
+   *
+   * @param uri
+   * @param options
+   */
+  public get(
+    uri: string,
+    options?: {
+      params?: any; // 即将与请求一起发送的 URL 参数，必须是一个无格式对象 (plain object) 或 URLSearchParams 对象
+      responseType?: ResponseType; // 返回数据的类型
+      contentType?: ContentType; // 请求数据的类型
+      config?: RequestConfig<D>; // axios 的配置选项
+    }
+  ) {
+    return this.request({
+      uri,
+      method: 'get',
+      ...options,
+    });
+  }
+
+  /**
+   * post 请求方法
+   *
+   * @param uri
+   * @param options
+   */
+  public post(
+    uri: string,
+    data?: D,
+    options?: {
+      params?: any; // 即将与请求一起发送的 URL 参数，必须是一个无格式对象 (plain object) 或 URLSearchParams 对象
+      responseType?: ResponseType; // 返回数据的类型
+      contentType?: ContentType; // 请求数据的类型
+      config?: RequestConfig<D>; // axios 的配置选项
+    }
+  ) {
+    return this.request({
+      uri,
+      method: 'post',
+      data,
+      ...options,
+    });
+  }
+
+  /**
+   * put 请求方法
+   *
+   * @param uri
+   * @param options
+   */
+  public put(
+    uri: string,
+    data?: D,
+    options?: {
+      params?: any; // 即将与请求一起发送的 URL 参数，必须是一个无格式对象 (plain object) 或 URLSearchParams 对象
+      responseType?: ResponseType; // 返回数据的类型
+      contentType?: ContentType; // 请求数据的类型
+      config?: RequestConfig<D>; // axios 的配置选项
+    }
+  ) {
+    return this.request({
+      uri,
+      method: 'put',
+      data,
+      ...options,
+    });
+  }
+
+  /**
+   * delete 请求方法
+   *
+   * @param uri
+   * @param options
+   */
+  public delete(
+    uri: string,
+    options?: {
+      params?: any; // 即将与请求一起发送的 URL 参数，必须是一个无格式对象 (plain object) 或 URLSearchParams 对象
+      responseType?: ResponseType; // 返回数据的类型
+      contentType?: ContentType; // 请求数据的类型
+      config?: RequestConfig<D>; // axios 的配置选项
+    }
+  ) {
+    return this.request({
+      uri,
+      method: 'delete',
+      ...options,
+    });
+  }
+
+  /**
    * 对 headers 进行转换，添加自定义的请求头
    *
    * @param headers
@@ -166,7 +258,15 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
     return (data: any, headers: any) => {
       switch (contentType) {
         case 'json':
-          return JSON.stringify(data);
+          let jsonData = null;
+          if (this.isObject(data) || Array.isArray(data)) {
+            jsonData = JSON.stringify(data);
+          } else {
+            console.error(
+              'When Content-Type is json, data must be object or array'
+            );
+          }
+          return jsonData;
         case 'form':
           return querystring.stringify(data);
         case 'file':
