@@ -6,6 +6,7 @@
 ## <h2 id='directory'>文件结构</h2>
 
 ```
+├─CommonMethod.ts            #公用方法类
 ├─Regexps.ts                 #正则表达式，及其错误提示
 ├─Rules.ts                   #验证规则，包含 Regexps 中的全部验证规则
 └─README.md                  #组件文件说明
