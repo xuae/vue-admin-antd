@@ -12,6 +12,8 @@ import Axios, {
   Method,
   ResponseType,
 } from 'axios';
+import CommonMethod from '@/utils/CommonMethod';
+import Response, { ResponseData } from '@/api/Response';
 
 /**
  * 转换请求数据使用，与 qs 类似
@@ -19,34 +21,13 @@ import Axios, {
  */
 const querystring = require('querystring');
 
-// api 返回的数据接口
-export interface Response<T = any> {
-  statusCode: number;
-  message: string;
-  data: T;
-}
-
-// api 请求的数据接口
-export interface RequestConfig<T = any> extends AxiosRequestConfig {
-  // `data` 是作为请求主体被发送的数据
-  // 只适用于这些请求方法 'PUT', 'POST', 和 'PATCH'
-  // 在没有设置 `transformRequest` 时，必须是以下类型之一：
-  // - string, plain object, ArrayBuffer, ArrayBufferView, URLSearchParams
-  // - 浏览器专属：FormData, File, Blob
-  // - Node 专属： Stream
-  data?: T;
-}
-
-// api 请求的类型枚举
-export type ContentType = 'json' | 'form' | 'file';
-
 /**
  * Axois 请求拦截类
  * 泛型：
  * T: 返回的数据类型
  * D: 请求的数据类型
  */
-export default class AxiosInterceptor<T, D = any, R = Response<T>> {
+export default class AxiosInterceptor<T, D = any, R = ResponseData<T>> {
   public instance: AxiosInstance; // axios 实例
 
   /**
@@ -125,6 +106,27 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
   }
 
   /**
+   * async 公共请求方法封装
+   * @param options
+   */
+  public async asyncRequest(options: {
+    uri: string; // 请求的 url 地址
+    method?: Method; // 请求的方法
+    data?: D; // 请求的需要带的数据，只适用于这些请求方法 'PUT', 'POST', 和 'PATCH'
+    params?: any; // 即将与请求一起发送的 URL 参数，必须是一个无格式对象 (plain object) 或 URLSearchParams 对象
+    responseType?: ResponseType; // 返回数据的类型
+    contentType?: ContentType; // 请求数据的类型
+    config?: RequestConfig<D>; // axios 的配置选项
+  }) {
+    try {
+      return await this.request(options);
+    } catch (e) {
+      const error = new Response().exception(e);
+      return Promise.resolve({ data: error });
+    }
+  }
+
+  /**
    * get 请求方法
    *
    * @param uri
@@ -150,6 +152,7 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
    * post 请求方法
    *
    * @param uri
+   * @param data
    * @param options
    */
   public post(
@@ -174,6 +177,7 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
    * put 请求方法
    *
    * @param uri
+   * @param data
    * @param options
    */
   public put(
@@ -223,7 +227,7 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
    * @param contentType
    */
   protected transformHeaders(headers: any, contentType: ContentType) {
-    headers = this.isObject(headers) ? headers : {};
+    headers = CommonMethod.isObject(headers) ? headers : {};
     headers['Content-Type'] = this.getContentType(contentType);
     return headers;
   }
@@ -255,11 +259,11 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
    * @param contentType
    */
   protected transformRequest(contentType: ContentType): AxiosTransformer {
-    return (data: any, headers: any) => {
+    return (data: any) => {
       switch (contentType) {
         case 'json':
           let jsonData = null;
-          if (this.isObject(data) || Array.isArray(data)) {
+          if (CommonMethod.isObject(data) || Array.isArray(data)) {
             jsonData = JSON.stringify(data);
           } else {
             console.error(
@@ -271,7 +275,7 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
           return querystring.stringify(data);
         case 'file':
           const formData = new FormData();
-          if (this.isObject(data)) {
+          if (CommonMethod.isObject(data)) {
             for (const key in data) {
               formData.append(key, data[key]);
             }
@@ -289,17 +293,22 @@ export default class AxiosInterceptor<T, D = any, R = Response<T>> {
    * 对返回的 data 进行任意转换处理
    */
   protected transformResponse(): AxiosTransformer {
-    return (data: any): Response<T> => {
+    return (data: any): ResponseData<T> => {
       return typeof data === 'string' ? JSON.parse(data) : data;
     };
   }
+}
 
-  /**
-   * 检测是否是由 {} 或者 new Object() 创建的对象
-   *
-   * @param value
-   */
-  protected isObject(value: any) {
-    return Object.prototype.toString.call(value) === '[object Object]';
-  }
+// api 请求的类型枚举
+type ContentType = 'json' | 'form' | 'file';
+
+// api 请求的数据接口
+interface RequestConfig<T = any> extends AxiosRequestConfig {
+  // `data` 是作为请求主体被发送的数据
+  // 只适用于这些请求方法 'PUT', 'POST', 和 'PATCH'
+  // 在没有设置 `transformRequest` 时，必须是以下类型之一：
+  // - string, plain object, ArrayBuffer, ArrayBufferView, URLSearchParams
+  // - 浏览器专属：FormData, File, Blob
+  // - Node 专属： Stream
+  data?: T;
 }
