@@ -24,7 +24,7 @@ export default class Util {
   static request({
     uri,
     method = 'get',
-    response = () => this.responseOk(),
+    response = data => this.responseOk(data),
   } = {}) {
     if (uri) {
       return {
@@ -111,6 +111,7 @@ export default class Util {
   /**
    * 返回失败数据
    * @param message
+   * @param data
    * @return {{statusCode: number, data: *, message: string}}
    */
   static responseError(message, data) {

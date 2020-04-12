@@ -23,4 +23,9 @@ export default [
       });
     },
   }),
+  Util.request({
+    uri: '/test',
+    method: 'post',
+    response: Util.responseOk(),
+  }),
 ];
