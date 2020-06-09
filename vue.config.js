@@ -215,5 +215,11 @@ module.exports = {
       config.plugins.delete('preload'); // 移除 preload 插件 TODO: need test
       config.plugins.delete('prefetch'); // 移除 prefetch 插件 TODO: need test
     }
+
+    // ============添加分析工具 start============
+    // config.plugin('webpack-bundle-analyzer')
+    //   .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+    //   .end();
+    // ============添加分析工具 end============
   },
 };
