@@ -20,6 +20,7 @@
     "vuex-class": "^0.3.2"
   },
   "devDependencies": {
+    "@babel/compat-data": "^7.10.1",
     "@babel/register": "^7.8.6",
     "@types/node": "^13.9.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
