@@ -132,6 +132,9 @@ Vue.use(Button);
 import 'ant-design-vue/lib/checkbox/style';
 Vue.use(Checkbox);
 
+// 全局配置
+Vue.use(ConfigProvider);
+
 // Vue.use(Col);
 // Vue.use(DatePicker);
 // Vue.use(Divider);
@@ -163,7 +166,7 @@ Vue.use(Layout);
 // Vue.use(List);
 
 // 全局化配置
-Vue.use(LocaleProvider);
+// Vue.use(LocaleProvider);
 
 // 导航菜单
 import 'ant-design-vue/lib/menu/style';

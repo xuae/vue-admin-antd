@@ -77,7 +77,7 @@
       </a-tab-pane>
     </a-tabs>
     <a-form-item>
-      <a-checkbox v-decorator="['autoLogin']">
+      <a-checkbox v-decorator="['autoLogin', { valuePropName: 'checked' }]">
         自动登录
       </a-checkbox>
       <a href="javascript:;" style="float: right">忘记密码</a>

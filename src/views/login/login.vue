@@ -42,8 +42,7 @@
   @footer-height: 100px;
 
   .login {
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: @layout-body-background;
     display: flex;
     flex-direction: column;
