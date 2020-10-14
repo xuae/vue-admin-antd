@@ -9,6 +9,9 @@ export default [
       const { account, password } = config.body;
 
       // mock error
+      if (account === undefined) {
+        return Util.responseError('暂时仅支持账号密码登录');
+      }
       if (account !== 'admin' || password !== '123456') {
         return Util.responseError('账号或密码错误，admin/123456');
       }
@@ -22,6 +25,11 @@ export default [
         token: /\d{5,10}\/-2/,
       });
     },
+  }),
+  Util.request({
+    uri: '/logout',
+    method: 'post',
+    response: Util.responseOk(),
   }),
   Util.request({
     uri: '/test',

@@ -41,16 +41,16 @@
           </div>
         </div>
         <a-menu slot="overlay" style="width: 160px" @click="handleMenuClick">
-          <a-menu-item key="0">
+          <a-menu-item key="user">
             <a-icon type="user" />
             个人中心
           </a-menu-item>
-          <a-menu-item key="1">
+          <a-menu-item key="setting">
             <a-icon type="setting" />
             个人设置
           </a-menu-item>
           <a-menu-divider />
-          <a-menu-item key="3">
+          <a-menu-item key="logout">
             <a-icon type="logout" />
             退出登录
           </a-menu-item>
@@ -63,6 +63,7 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import { namespace } from 'vuex-class';
+  import Account from '@/api/Account';
 
   const SidebarModule = namespace('sidebar');
 
@@ -78,11 +79,32 @@
       return this.$route;
     }
 
+    // 左侧菜单栏折叠事件
     handleCollapsed() {
       this.setCollapsed(!this.collapsed);
     }
 
-    handleMenuClick(e: any) {}
+    // 右上角菜单点击事件
+    async handleMenuClick(data: any = {}) {
+      const { item, key, keyPath } = data;
+      switch (key) {
+        case 'user':
+          // 个人中心
+          break;
+        case 'setting':
+          // 个人设置
+          break;
+        case 'logout':
+          // 退出
+          const res = await Account.logout();
+          if (res.isOk()) {
+            await this.$router.replace({ name: 'login' });
+          } else {
+            res.alertMessage();
+          }
+          break;
+      }
+    }
 
     created() {
       this.userName = 'Admin'; // localStorage.getItem('userName');

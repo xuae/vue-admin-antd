@@ -6,13 +6,20 @@ import API from '@/api/API';
 export default class Account extends API {
   // 登录
   static async login(data: any) {
-    const result = await this.base.request({
+    return await this.base.asyncRequest({
       uri: '/login',
       method: 'post',
       data: data,
       contentType: 'form',
     });
-    return result.data;
+  }
+
+  // 退出登录
+  static async logout() {
+    return await this.base.asyncRequest({
+      uri: '/logout',
+      method: 'post',
+    });
   }
 
   // 测试

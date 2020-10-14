@@ -69,6 +69,10 @@ import {
 } from 'ant-design-vue';
 import Vue from 'vue';
 
+import 'ant-design-vue/lib/message/style';
+import 'ant-design-vue/lib/modal/style';
+import 'ant-design-vue/lib/notification/style';
+
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
 Vue.prototype.$info = Modal.info;

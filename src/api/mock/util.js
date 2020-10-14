@@ -70,7 +70,7 @@ export default class Util {
    * @param data
    * @return {{statusCode: number, data: *, message: string}}
    */
-  static response({ statusCode = 200, message = 'OK', data = null } = {}) {
+  static response({ statusCode = 0, message = 'OK', data = null } = {}) {
     return {
       statusCode,
       message,
@@ -83,7 +83,7 @@ export default class Util {
    * @param data
    * @return {{statusCode: number, data: *, message: string}}
    */
-  static responseOk(data) {
+  static responseOk(data = null) {
     return this.response({ data });
   }
 
@@ -114,9 +114,9 @@ export default class Util {
    * @param data
    * @return {{statusCode: number, data: *, message: string}}
    */
-  static responseError(message, data) {
+  static responseError(message = 'Failed', data = null) {
     return this.response({
-      statusCode: 500,
+      statusCode: 1,
       message,
       data,
     });

@@ -27,7 +27,7 @@ const querystring = require('querystring');
  * T: 返回的数据类型
  * D: 请求的数据类型
  */
-export default class AxiosInterceptor<T, D = any, R = ResponseData<T>> {
+export default class AxiosInterceptor<T = any, D = any> {
   public instance: AxiosInstance; // axios 实例
 
   /**
@@ -79,7 +79,7 @@ export default class AxiosInterceptor<T, D = any, R = ResponseData<T>> {
     responseType?: ResponseType; // 返回数据的类型
     contentType?: ContentType; // 请求数据的类型
     config?: RequestConfig<D>; // axios 的配置选项
-  }): AxiosPromise<R> {
+  }): AxiosPromise<ResponseData<T>> {
     const {
       uri,
       method = 'get',
@@ -119,10 +119,11 @@ export default class AxiosInterceptor<T, D = any, R = ResponseData<T>> {
     config?: RequestConfig<D>; // axios 的配置选项
   }) {
     try {
-      return await this.request(options);
+      const result = await this.request(options);
+      return new Response<T>().setApiResponse(result.data);
     } catch (e) {
       const error = new Response().exception(e);
-      return Promise.resolve({ data: error });
+      return Promise.resolve(error);
     }
   }
 
@@ -263,12 +264,14 @@ export default class AxiosInterceptor<T, D = any, R = ResponseData<T>> {
       switch (contentType) {
         case 'json':
           let jsonData = null;
-          if (CommonMethod.isObject(data) || Array.isArray(data)) {
-            jsonData = JSON.stringify(data);
-          } else {
-            console.error(
-              'When Content-Type is json, data must be object or array'
-            );
+          if (data) {
+            if (CommonMethod.isObject(data) || Array.isArray(data)) {
+              jsonData = JSON.stringify(data);
+            } else {
+              console.error(
+                'When Content-Type is json, data must be object or array'
+              );
+            }
           }
           return jsonData;
         case 'form':

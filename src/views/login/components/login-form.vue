@@ -118,7 +118,7 @@
         case 'account':
           this.form.validateFields(
             ['account', 'password'],
-            async (error: any, values: any) => {
+            (error: any, values: any) => {
               if (!error) {
                 this.login(values);
               }
@@ -128,7 +128,7 @@
         case 'mobile':
           this.form.validateFields(
             ['mobile', 'code'],
-            async (error: any, values: any) => {
+            (error: any, values: any) => {
               if (!error) {
                 this.login(values);
               }
@@ -141,8 +141,8 @@
     // 登录方法
     async login(values: any) {
       const response = await Account.login(values);
-      if (response.statusCode === 200) {
-        this.$router.push({ name: 'home' });
+      if (response.isOk()) {
+        await this.$router.push({ name: 'home' });
       } else {
         this.errorMessage = response.message;
       }
@@ -151,14 +151,9 @@
     // tab 切换事件
     handleTabChange(activeKey: 'account' | 'mobile') {
       this.activeKey = activeKey;
-      // 清空表单的错误提示
+      // 清空表单和错误提示
       this.errorMessage = null;
-      this.form.setFields({
-        account: { value: this.form.getFieldValue('account'), errors: null },
-        password: { value: this.form.getFieldValue('password'), errors: null },
-        mobile: { value: this.form.getFieldValue('mobile'), errors: null },
-        code: { value: this.form.getFieldValue('code'), errors: null },
-      });
+      this.form.resetFields();
     }
 
     // 生命周期 created
