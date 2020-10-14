@@ -21,6 +21,9 @@
 // 重置 ant input search，在输入框和按钮之间仅显示一条边框
 .ant-form-item {
   .ant-input-search {
+    input {
+      border-right: 1px solid @border-color-base;
+    }
     .ant-input-prefix {
       z-index: 3;
     }
@@ -29,6 +32,7 @@
     }
     .ant-btn {
       margin-left: -1px;
+      margin-right: 0;
     }
   }
 
