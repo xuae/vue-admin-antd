@@ -33,4 +33,4 @@ jobs:
           # white_list: 'repo_name,repo_name2'
           force_update: true
           # debug: true
-          clone_style: "ssh"
+          # clone_style: "ssh"
