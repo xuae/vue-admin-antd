@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Mirror the Github organization repos to Gitee.
-        uses: Yikun/gitee-mirror-action@v0.05
+        uses: Yikun/gitee-mirror-action@v0.10
         with:
           # 必选，需要同步的 Github 用户（源）
           src: github/xuae
@@ -31,3 +31,5 @@ jobs:
           # static_list: repo_name
           # black_list: 'repo_name,repo_name2'
           # white_list: 'repo_name,repo_name2'
+          force_update: true
+          debug: true
