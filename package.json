@@ -11,6 +11,7 @@
     "ant-design-vue": "^1.6.3",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "lodash": "^4.17.20",
     "mockjs": "^1.1.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.2",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@babel/compat-data": "^7.10.1",
     "@babel/register": "^7.8.6",
+    "@types/lodash": "^4.14.162",
     "@types/node": "^13.9.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",

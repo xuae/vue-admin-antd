@@ -1,4 +1,5 @@
 const path = require('path');
+const portfinder = require('portfinder');
 const webpack = require('webpack');
 const isProduction = process.env.NODE_ENV === 'production'; // 是否是生产环境
 
@@ -25,7 +26,22 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
  *
  * @type {number}
  */
-const port = 9001;
+const port = 9002;
+
+// !(async function() {
+//   console.log('2222')
+//   port = await portfinder.getPortPromise({ port });
+//   console.log(port);
+// })();
+// console.log('port', port);
+
+// portfinder.getPort({ port }, (err, p) => {
+//   if(err) {
+//     console.error(err);
+//     return;
+//   }
+//   port = p;
+// });
 
 /** mock-server开关,该环境变量定义在文件`.env.development`中 */
 const enableMockServer = process.env.VUE_APP_MOCK === 'Mock_Server';
