@@ -96,6 +96,42 @@ const float2: Item = {
   message: '只能输入数字，最多两位小数',
 };
 
+/**
+ * 同时支持15位和18位社会信用代码
+ */
+const socialCreditCode: Item = {
+  pattern: /^([0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}|[1-9]\d{14})$/,
+  message: '格式错误',
+};
+
+/**
+ * 15位社会信用代码
+ *
+ * 老的工商注册代码
+ */
+const socialCreditCode_15: Item = {
+  pattern: /^[1-9]\d{15}$/,
+  message: '格式错误',
+};
+
+/**
+ * 18位社会信用代码
+ *
+ * 统一社会信用代码由18位数字或者大写字母组成，但是字母不包括 I、O、Z、S、V
+ * 一共由五部分组成
+ * 第一部分：登记管理部门代码1位 (数字或大写英文字母)
+ * 第二部分：机构类别代码1位 (数字或大写英文字母)
+ * 第三部分：登记管理机关行政区划码6位 (数字)
+ * 第四部分：主体标识码（组织机构代码）9位 (数字或大写英文字母)
+ * 第五部分：校验码1位 (数字或大写英文字母)
+ *
+ * 样本：91620105MA71BQEG18
+ */
+const socialCreditCode_18: Item = {
+  pattern: /^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$/,
+  message: '格式错误',
+};
+
 export default {
   userName,
   password,
@@ -112,4 +148,7 @@ export default {
   plusInt,
   minusInt,
   float2,
+  socialCreditCode,
+  socialCreditCode_15,
+  socialCreditCode_18,
 };
